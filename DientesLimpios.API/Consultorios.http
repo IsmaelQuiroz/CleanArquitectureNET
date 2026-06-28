@@ -5,9 +5,14 @@ Accept: application/json
 
 ###
 
+GET {{DientesLimpios.API_HostAddress}}
+Accept: application/json
+
+###
+
 POST {{DientesLimpios.API_HostAddress}}
 Content-Type: application/json
 
 {
-  "nombre" : "Consultorio A"
+  "nombre" : "Consultorio B"
 }

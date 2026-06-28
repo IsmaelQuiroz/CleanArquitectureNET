@@ -1,6 +1,6 @@
 @DientesLimpios.API_HostAddress = http://localhost:5270/api/Consultorios
 
-GET {{DientesLimpios.API_HostAddress}}/
+GET {{DientesLimpios.API_HostAddress}}/019F09DC-4A65-7005-B3CB-D7CB983CED2B
 Accept: application/json
 
 ###

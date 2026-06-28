@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DientesLimpios.Aplicacion.Excepciones
+{
+    public class ExcepcionDeMediador : Exception
+    {
+        //Recibimos un mensaje y mandamos el mensaje a la clase base
+        public ExcepcionDeMediador(string mensaje) 
+            : base(mensaje)
+        {
+            
+        }
+    }
+}

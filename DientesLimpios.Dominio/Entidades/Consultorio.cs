@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,13 +15,25 @@ namespace DientesLimpios.Dominio.Entidades
 
         public Consultorio(string nombre) {
 
-            if (string.IsNullOrWhiteSpace(nombre))
-            {
-                throw new ExcepcionDeReglaDeNegocio($"El {nameof(nombre)} es obligatorio");
-            }
+            AplicarReglasDeNegocio(nombre);
+
             Nombre = nombre;
             Id = Guid.CreateVersion7(); //Tiene una logica secuencial favorable a la hora de insertar
                                         //el registro en una base de datos, evitando fragmentación
+        }
+
+        public void ActualizarNombre(string nombre)
+        {
+            AplicarReglasDeNegocio(nombre);
+            Nombre = nombre;
+        }
+
+        private void AplicarReglasDeNegocio(string nombre)
+        {
+            if(string.IsNullOrWhiteSpace(nombre))
+            {
+                throw new ExcepcionDeReglaDeNegocio($"El {nameof(nombre)} es obligatorio");
+            }
         }
     }
 }

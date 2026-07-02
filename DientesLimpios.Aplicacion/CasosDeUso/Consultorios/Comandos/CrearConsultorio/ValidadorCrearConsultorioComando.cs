@@ -13,7 +13,8 @@ namespace DientesLimpios.Aplicacion.CasosDeUso.Consultorios.Comandos.CrearConsul
         public ValidadorComandoCrearConsultorio()
         {
             RuleFor(p => p.Nombre)
-             .NotEmpty().WithMessage("El campo {propertyName} es requerido");
+             .NotEmpty().WithMessage("El campo {propertyName} es requerido")
+             .MaximumLength(150).WithMessage("La longitud del campo {PropertyName} debe ser menor o igual a {MaxLength}");
         }
     }
 }

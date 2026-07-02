@@ -15,5 +15,7 @@ namespace DientesLimpios.Aplicacion.Utilidades.Mediador
         //gracias al <TResponse> que tenemos en el argumento vamos a poder
         //determinar el tipo de dato de salida Task<TResponse> que vamos a sacar del Mediador cuando mandemos el comando o la consulta
         Task<TResponse> Send<TResponse>(IRequest<TResponse> request);
+        
+        Task Send(IRequest request);
     }
 }

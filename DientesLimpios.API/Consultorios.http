@@ -24,3 +24,8 @@ Content-Type: application/json
 {
   "nombre" : "Consultorio B-Actualizado"
 }
+
+###
+
+DELETE {{DientesLimpios.API_HostAddress}}/019f108f-e84b-7c34-a5e1-ef5d49cf5c61
+Accept: applicaion/json

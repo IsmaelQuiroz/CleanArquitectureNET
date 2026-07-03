@@ -27,13 +27,29 @@ namespace DientesLimpios.Aplicacion
         {
             // <Servicio , la clase que se va servir>
             services.AddTransient<IMediator, MediadorSimple>();
-            services.AddScoped<IRequestHandler<ComandoCrearConsultorio, Guid>, CasoDeUsoCrearConsultorio>();
-            services.AddScoped<IRequestHandler<ConsultaObtenerDetalleConsultorio,ConsultorioDetalleDTO>, 
-                                    CasoDeUsoObtenerDetalleConsultorio>();
-            services.AddScoped<IRequestHandler<ConsultaObtenerListadoConsultorios, List<ConsultorioListadoDTO>>, 
-                                            CasoDeUsoObtenerListadoConsultorios>();
-            services.AddScoped<IRequestHandler<ComandoActualizarConsultorio>, CasoDeUsoActualizarConsultorio>();
-            services.AddScoped<IRequestHandler<ComandoBorrarConsultorio>, CasoDeUsoBorrarConsultorio>();
+
+            //Registrar todos los IRequestHandler<> con y sin TResponse con sus respectivos Casos de Uso
+            services.Scan(scan => scan.FromAssembliesOf(typeof(IMediator))
+            .AddClasses(c => c.AssignableTo(typeof(IRequestHandler<>))) //los que no retornan valor
+            .AsImplementedInterfaces()
+            .WithScopedLifetime()
+            .AddClasses(c => c.AssignableTo(typeof(IRequestHandler<,>)))//los que si retornan valor
+            .AsImplementedInterfaces()
+            .WithScopedLifetime());
+
+
+
+        
+            //services.AddScoped<IRequestHandler<ComandoCrearConsultorio, Guid>, CasoDeUsoCrearConsultorio>();
+            //services.AddScoped<IRequestHandler<ConsultaObtenerDetalleConsultorio,ConsultorioDetalleDTO>, 
+            //                        CasoDeUsoObtenerDetalleConsultorio>();
+            //services.AddScoped<IRequestHandler<ConsultaObtenerListadoConsultorios, List<ConsultorioListadoDTO>>, 
+            //                                CasoDeUsoObtenerListadoConsultorios>();
+            //services.AddScoped<IRequestHandler<ComandoActualizarConsultorio>, CasoDeUsoActualizarConsultorio>();
+            //services.AddScoped<IRequestHandler<ComandoBorrarConsultorio>, CasoDeUsoBorrarConsultorio>();
+
+
+
 
             return services;
         }

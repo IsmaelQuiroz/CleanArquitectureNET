@@ -29,5 +29,11 @@ namespace DientesLimpios.Dominio.Entidades
             Nombre = nombre;
             Email = email;
         }
+
+        //constructor sin parametros para EntityFramework Core para la Migration
+        private Paciente()
+        {
+
+        }
     }
 }

@@ -30,5 +30,6 @@ namespace DientesLimpios.Persistencia
 
         //se especifican los DbSet para crear las tablas a partir de nuestra entidades
         public DbSet<Consultorio> Consultorios { get; set; }
+        public DbSet<Paciente> Pacientes { get; set; }
     }
 }

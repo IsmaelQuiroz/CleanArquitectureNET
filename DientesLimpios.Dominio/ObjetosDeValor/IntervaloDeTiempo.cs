@@ -21,5 +21,12 @@ namespace DientesLimpios.Dominio.ObjetosDeValor
             Inicio = inicio;
             Fin = fin;
         }
+
+        private IntervaloDeTiempo()
+        {
+            
+        }
     }
+
+    
 }

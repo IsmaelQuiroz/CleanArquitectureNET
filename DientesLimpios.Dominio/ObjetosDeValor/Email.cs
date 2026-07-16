@@ -23,5 +23,11 @@ namespace DientesLimpios.Dominio.ObjetosDeValor
             }
             Valor = email;
         }
+
+        //ctor para Migraciones de EF
+        private Email()
+        {
+            
+        }
     }
 }

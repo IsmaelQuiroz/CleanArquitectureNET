@@ -16,7 +16,7 @@ namespace DientesLimpios.Dominio.Entidades
         public Guid DentistaId { get; private set; }
         public Guid ConsultorioId { get; private set; }
         public EstadoCita Estado { get; private set; }
-        public IntervaloDeTiempo IntervaloDeTiempo { get; private set; }
+        public IntervaloDeTiempo IntervaloDeTiempo { get; private set; } = null!; //Perdona Null
 
         //para las relaciones
         public Paciente ? Paciente { get; private set; }
@@ -38,6 +38,12 @@ namespace DientesLimpios.Dominio.Entidades
 
             Estado = EstadoCita.Programada;
             Id = Guid.CreateVersion7();
+        }
+
+        //para migraciones de EF
+        private Cita()
+        {
+            
         }
 
         public void Cancelar()

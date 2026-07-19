@@ -1,4 +1,5 @@
-﻿using DientesLimpios.Dominio.Entidades;
+﻿using DientesLimpios.Aplicacion.CasosDeUso.Pacientes.Consultas.ObtenerListadoDePacientes;
+using DientesLimpios.Dominio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace DientesLimpios.Aplicacion.Contratos.Repositorios
 {
     public interface IRepositorioPacientes: IRepositorio<Paciente>
     {
-
+        Task<IEnumerable<Paciente>> ObtenerFiltrado(FiltroPacienteDTO filtro);
     }
 }

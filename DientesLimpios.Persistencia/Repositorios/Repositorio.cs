@@ -38,6 +38,11 @@ namespace DientesLimpios.Persistencia.Repositorios
             return Task.CompletedTask;
         }
 
+        public async Task<int> ObtenerCantidadTotalRegistros()
+        {
+            return await context.Set<T>().CountAsync();
+        }
+
         public async Task<T?> ObtenerPorId(Guid id)
         {
             return await context.Set<T>().FindAsync(id);

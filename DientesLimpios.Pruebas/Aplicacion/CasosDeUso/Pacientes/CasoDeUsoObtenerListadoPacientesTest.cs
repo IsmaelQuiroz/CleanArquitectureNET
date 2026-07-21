@@ -1,4 +1,5 @@
 ﻿using DientesLimpios.Aplicacion.CasosDeUso.Pacientes.Consultas.ObtenerListadoDePacientes;
+using DientesLimpios.Aplicacion.Contratos.Persistencia;
 using DientesLimpios.Aplicacion.Contratos.Repositorios;
 using DientesLimpios.Dominio.Entidades;
 using DientesLimpios.Dominio.ObjetosDeValor;
@@ -30,12 +31,54 @@ namespace DientesLimpios.Pruebas.Aplicacion.CasosDeUso.Pacientes
             var pagina = 1;
             var registrosPorPagina = 2;
 
-            var filtroPacienteDTO = new FiltroPacienteDTO { Pagina=pagina, RegistrosPorPagina=registrosPorPagina};
+            //var filtroPacienteDTO = new FiltroPacienteDTO { Pagina=pagina, RegistrosPorPagina=registrosPorPagina};
             var paciente1 = new Paciente("Felipe", new Email("felipe@ejemplo.com"));
-            var paciente2 = new Paciente("claudia", new Email("claudia@ejemplo.com"));
+            var paciente2 = new Paciente("Claudia", new Email("claudia@ejemplo.com"));
 
             //They are test pacientes that will return Obtener filtrado repository method
             IEnumerable<Paciente> pacientes = new List<Paciente> { paciente1, paciente2 };
+
+            repositorio.ObtenerFiltrado(Arg.Any<FiltroPacienteDTO>()).Returns(Task.FromResult(pacientes));
+
+            repositorio.ObtenerCantidadTotalRegistros().Returns(Task.FromResult(10));
+
+            var request = new ConsultaObtenerListadoDePacientes
+            {
+                Pagina = pagina,
+                RegistrosPorPagina = registrosPorPagina
+            };
+
+            var resultado = await casoDeUso.Handle(request);
+
+            Assert.AreEqual(10, resultado.Total);
+            Assert.AreEqual(2, resultado.Elementos.Count);
+            Assert.AreEqual("Felipe", resultado.Elementos[0].Nombre);
+            Assert.AreEqual("Claudia", resultado.Elementos[1].Nombre);
+
+        }
+
+        [TestMethod]
+        public async Task Handle_CuandoNoHayPacientes_RetornaListaVaciaYTotalCero()
+        {
+            var pagina = 1;
+            var registrosPorPagina = 5;
+
+            //var filtroPacienteDTO = new FiltroPacienteDTO { Pagina = pagina, RegistrosPorPagina = registrosPorPagina };
+            IEnumerable<Paciente> pacientes = new List<Paciente>();
+
+            repositorio.ObtenerFiltrado(Arg.Any<FiltroPacienteDTO>()).Returns(Task.FromResult(pacientes));
+            repositorio.ObtenerCantidadTotalRegistros().Returns(Task.FromResult(0));
+
+            var request = new ConsultaObtenerListadoDePacientes
+            {
+                Pagina = pagina,
+                RegistrosPorPagina = registrosPorPagina
+            };
+
+            var resultado = await casoDeUso.Handle(request);
+            Assert.AreEqual(0, resultado.Total);
+            Assert.IsNotNull(resultado.Elementos);
+            Assert.AreEqual(0, resultado.Elementos.Count);
 
         }
 

@@ -1,6 +1,8 @@
 ﻿using DientesLimpios.API.DTOs.Pacientes;
 using DientesLimpios.API.Utilidades;
+using DientesLimpios.Aplicacion.CasosDeUso.Pacientes.Comandos.ActualizarPaciente;
 using DientesLimpios.Aplicacion.CasosDeUso.Pacientes.Comandos.CrearPaciente;
+using DientesLimpios.Aplicacion.CasosDeUso.Pacientes.Consultas.ObtenerDetallePaciente;
 using DientesLimpios.Aplicacion.CasosDeUso.Pacientes.Consultas.ObtenerListadoDePacientes;
 using DientesLimpios.Aplicacion.Utilidades.Mediador;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +20,13 @@ namespace DientesLimpios.API.Controllers
             this.mediator = mediator;
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PacienteDetalleDTO>> Get(Guid id)
+        {
+            var consulta = new ConsultaObtenerDetallePaciente { Id = id };
+            var res = await mediator.Send(consulta);
+            return res;
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post(CrearPacienteDTO crearPacienteDTO)
@@ -35,6 +44,15 @@ namespace DientesLimpios.API.Controllers
             var resultado = await mediator.Send(consulta);
             HttpContext.InsertarPaginacionEnCabecera(resultado.Total);
             return resultado.Elementos;
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(Guid id, ActualizarPacienteDTO actualizarPacienteDTO)
+        {
+            var comando = new ComandoActualizarPaciente { Id = id, Nombre = actualizarPacienteDTO.Nombre, Email = actualizarPacienteDTO.Email };
+            await mediator.Send(comando);
+            return Ok();    
+
         }
     }
 }
